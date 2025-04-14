@@ -29,7 +29,16 @@ def validate_name(name):
         return False, "Name contains invalid characters"
     
     # Check for obscene words (expand this list as needed)
-    obscene_words = ['fuck', 'shit', 'ass', 'bitch', 'dick']
+    obscene_words = [
+    'fuck', 'shit', 'ass', 'bitch', 'dick', 'bastard', 'slut', 'whore', 'cunt',
+    'piss', 'douche', 'motherfucker', 'fucker', 'asshole', 'cock', 'tit', 'boob',
+    'bollocks', 'bugger', 'crap', 'darn', 'damn', 'jackass', 'prick', 'twat',
+    'nigger', 'chink', 'spic', 'kike', 'gook', 'tranny', 'fag', 'faggot',
+    'rape', 'rapist', 'jerkoff', 'wanker', 'nutjob', 'skank', 'hoe', 'cum',
+    'jizz', 'fisting', 'screw', 'ballsack', 'nutsack', 'snatch', 'shithead',
+    'titfuck', 'anal', 'rimjob', 'porn', 'sex', 'suck', 'blowjob', 'handjob'
+]
+
     name_lower = name.lower()
     for word in obscene_words:
         if word in name_lower:
