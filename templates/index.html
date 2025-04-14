@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row align-items-center">
+    <div class="col-md-6 mb-4 mb-md-0 text-center">
+        <div class="animate-fade-in">
+            <h1 class="display-4 mb-4">Only Real Nerds Score 10/10</h1>
+            <p class="lead mb-4">Are you one of the chosen few ?</p>
+            <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#nameModal">
+                <span class="btn-text">Take Quiz</span>
+                <span class="btn-icon">→</span>
+            </button>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card animate-fade-in" style="animation-delay: 0.3s;">
+            <div class="card-header">
+                <h3 class="card-title mb-0 text-center">Nerdboard 🗿</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Name</th>
+                                <th>Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for attempt in leaderboard %}
+                            <tr class="animate-fade-in" style="animation-delay: {{ 0.4 + loop.index0 * 0.1 }}s">
+                                <td>
+                                    <span class="rank-badge">{{ loop.index }}</span>
+                                </td>
+                                <td>{{ attempt.player_name }}</td>
+                                <td>
+                                    <span class="score-badge">{{ attempt.score }}/10</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Name Modal -->
+<div class="modal fade name-entry-modal" id="nameModal" tabindex="-1" aria-labelledby="nameModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="nameModalLabel">Enter Your Name</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ url_for('quiz') }}" method="POST">
+                <div class="modal-body">
+                    <div class="mb-0">
+                        <label for="player_name" class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="player_name" name="player_name" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        <span class="btn-text">Start Quiz</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+.rank-badge {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    padding: 5px 12px;
+    border-radius: 50%;
+    font-weight: 600;
+}
+
+.score-badge {
+    background: rgba(108, 92, 231, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.btn-icon {
+    margin-left: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.btn:hover .btn-icon {
+    transform: translateX(5px);
+}
+
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2.5rem;
+    }
+}
+</style>
+{% endblock %} 

@@ -1,0 +1,30 @@
+# Vercel configuration
+.vercel/
+
+# Python-related files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+*.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# SQLite database
+instance/*.db
+*.sqlite3
+
+# Logs
+*.log
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
