@@ -2,10 +2,12 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for, f
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
 import os
 import re
 import pytz
 
+load_dotenv()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///quiz.db'
@@ -13,6 +15,9 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'admin_login'
+
+
+database_password = os.getenv("DATABASE_PASSWORD")
 
 # Timezone setup
 IST = pytz.timezone('Asia/Kolkata')
@@ -209,7 +214,7 @@ if __name__ == '__main__':
         # Create admin user if not exists
         admin = User.query.filter_by(username='admin').first()
         if not admin:
-            admin = User(username='admin', password='admin123', is_admin=True)
+            admin = User(username='admin', password=database_password, is_admin=True)
             db.session.add(admin)
             db.session.commit()
-    app.run(debug=True) 
+    app.run(debug=True)
