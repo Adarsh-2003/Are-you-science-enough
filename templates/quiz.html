@@ -92,6 +92,16 @@ h2 {
     flex-direction: column;
     gap: 0.75rem;
 }
+
+.modal-content {
+background: #181828 !important;
+color: #fff;
+opacity: 1 !important;
+}
+
+.modal-backdrop.show {
+opacity: 0.9;
+}
 </style>
 
 <div class="quiz-container">
@@ -240,6 +250,8 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         let score = 0;
         const answers = [];
+        let firstUnanswered = null;
+        const questionCards = Array.from(document.querySelectorAll('.question-card'));
 
         questions.forEach((q, index) => {
             const selected = document.querySelector(`input[name="q${index}"]:checked`);
@@ -249,8 +261,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (answer === q.correct) {
                     score++;
                 }
+            } else {
+                if (!firstUnanswered) {
+                    firstUnanswered = questionCards[index];
+                }
             }
         });
+
+        if (answers.length < questions.length) {
+            // Scroll to first unanswered question and highlight it
+            if (firstUnanswered) {
+                firstUnanswered.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                firstUnanswered.style.boxShadow = '0 0 0 4px #ff7675';
+                firstUnanswered.style.transition = 'box-shadow 0.3s';
+                setTimeout(() => {
+                    firstUnanswered.style.boxShadow = '';
+                }, 2000);
+            }
+            return;
+        }
 
         // Submit score to server
         fetch('/submit_quiz', {
@@ -275,6 +304,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     feedback.innerHTML = '<div class="text-warning">Keep practicing! You can do better! 💪</div>';
                 }
+
+                // Detailed breakdown
+                let breakdown = '<hr><h5 class="mt-3">Question Review</h5>';
+                questions.forEach((q, index) => {
+                    const userAnswer = answers[index];
+                    const isCorrect = userAnswer === q.correct;
+                    breakdown += `<div class="text-start mb-3">
+                        <strong>Q${index + 1}:</strong> ${q.question}<br>
+                        <span class="badge bg-${isCorrect ? 'success' : 'danger'}">Your answer: ${q.options[userAnswer] !== undefined ? q.options[userAnswer] : '<em>No answer</em>'}</span><br>`;
+                    if (!isCorrect) {
+                        breakdown += `<span class="badge bg-primary">Correct answer: ${q.options[q.correct]}</span><br>`;
+                    }
+                    breakdown += '</div>';
+                });
+                feedback.innerHTML += breakdown;
+
                 const resultsModal = new bootstrap.Modal(document.getElementById('resultsModal'));
                 resultsModal.show();
             }
