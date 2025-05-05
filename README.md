@@ -2,13 +2,13 @@
 
 🎥 **Demo**
 
-[![Watch the demo](static/demo.png)](https://youtu.be/kILbI9iVsDI)
+[![Watch the demo](static/demo.jpg)](https://youtu.be/kILbI9iVsDI)
 
 A dynamic, web-based science quiz application built with Flask, PostgreSQL, web technologies (HTML, CSS, JavaScript). It challenges science enthusiasts with engaging quizes while tracking scores and maintaining a live leaderboard.
 
 ## Features
 
-- Interactive 10-question science quiz  
+- Challenging ten science based quiz   
 - Dynamic leaderboard showing top 4 scorers  
 - Admin dashboard with quiz history  
 - Responsive design for all devices  
