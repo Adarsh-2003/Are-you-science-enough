@@ -77,3 +77,4 @@ virtualenv==20.29.3
 watchdog==4.0.1
 webdriver-manager==4.0.2
 Werkzeug==3.0.1
+psycopg2-binary==2.9.9

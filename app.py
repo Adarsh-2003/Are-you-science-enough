@@ -10,7 +10,14 @@ import pytz
 load_dotenv()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///quiz.db'
+
+# Database configuration
+DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///quiz.db')
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -208,13 +215,15 @@ def delete_user(user_id):
     
     return jsonify({'success': True, 'message': 'User deleted successfully'})
 
+# Initialize database and create admin user
+with app.app_context():
+    db.create_all()
+    # Create admin user if not exists
+    admin = User.query.filter_by(username='admin').first()
+    if not admin:
+        admin = User(username='admin', password=database_password, is_admin=True)
+        db.session.add(admin)
+        db.session.commit()
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-        # Create admin user if not exists
-        admin = User.query.filter_by(username='admin').first()
-        if not admin:
-            admin = User(username='admin', password=database_password, is_admin=True)
-            db.session.add(admin)
-            db.session.commit()
     app.run(debug=True)
