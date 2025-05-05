@@ -1,83 +1,81 @@
-# How Good is Your Science? - Quiz App
+# Are You Science Enough? – Powered by Curiosity
 
-A web-based science quiz application built with Flask, SQLite, and modern web technologies.
+🎥 ****
+
+A dynamic, web-based science quiz application built with Flask, PostgreSQL, web technologies (HTML, CSS, JavaScript). It challenges science enthusiasts with engaging quizes while tracking scores and maintaining a live leaderboard.
 
 ## Features
 
-- Interactive 10-question science quiz
-- Dynamic leaderboard showing top 4 scorers
-- Admin dashboard with quiz history
-- Responsive design for all devices
-- No login required for taking the quiz
-- Secure admin access
+- Interactive 10-question science quiz  
+- Dynamic leaderboard showing top 4 scorers  
+- Admin dashboard with quiz history  
+- Responsive design for all devices  
+- No login required for taking the quiz  
+- Secure admin access  
 
-## Prerequisites
+## Routes (APIs)
 
-- Python 3.8 or higher
-- pip (Python package installer)
+- `/` → Home page  
+- `/quiz` → Quiz page  
+- `/submit_quiz` → Handles quiz submission (POST)  
+- `/admin/login` → Admin login page  
+- `/admin/dashboard` → Admin dashboard  
 
-## Installation
+## Tech Stack
 
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd quiz-app
-```
+- **Backend:** Flask, Flask-SQLAlchemy  
+- **Frontend:** HTML, CSS, JavaScript  
+- **Database:** PostgreSQL or SQLite  
 
-2. Create a virtual environment (optional but recommended):
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+## Database Schema
 
-3. Install the required packages:
-```bash
-pip install -r requirements.txt
-```
+### `User` table
+- `id` (int)  
+- `username` (string)  
+- `password` (string)  
+- `is_admin` (bool)
 
-## Running the Application
+### `QuizAttempt` table
+- `id` (int)  
+- `player_name` (string)  
+- `score` (int)  
+- `timestamp` (datetime)
 
-1. Start the Flask development server:
-```bash
-python app.py
-```
+## User Flow
 
-2. Open your web browser and navigate to:
-```
-http://localhost:5000
-```
-
-## Admin Access
-
-Default admin credentials:
-- Username: admin
-- Password: admin123
-
-**Important:** Change these credentials in production!
+1. Lands on Home Page  
+2. Clicks "Attempt Quiz"  
+3. Name input popup  
+4. Redirects to quiz page  
+5. Attempts and submits quiz  
+6. Score is displayed  
+7. Score recorded in leaderboard and history
 
 ## Project Structure
 
-```
-quiz-app/
-├── app.py              # Main application file
-├── requirements.txt    # Python dependencies
-├── static/            # Static files
+```text
+ARE-YOU-SCIENCE-ENOUGH/
+├── .vercel/                  # Vercel deployment settings
+├── instance/
+│   └── quiz.db               # SQLite database file
+├── static/                   # Static assets
 │   ├── css/
 │   │   └── style.css
 │   └── js/
 │       └── main.js
-└── templates/         # HTML templates
-    ├── base.html
-    ├── index.html
-    ├── quiz.html
-    ├── admin_login.html
-    └── admin_dashboard.html
+├── templates/                # HTML templates
+│   ├── admin_dashboard.html
+│   ├── admin_login.html
+│   ├── base.html
+│   ├── index.html
+│   └── quiz.html
+├── venv/                     # Python virtual environment
+├── .env                      # Environment variables
+├── .gitignore
+├── app.py                    # Main Flask application
+├── dockerfile                # Docker configuration
+├── README.md
+├── requirements.txt          # Python dependencies
+└── vercel.json               # Vercel project config
 ```
-
-## Contributing
-
-Feel free to submit issues and enhancement requests!
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details. 
+A big thank you to render.com for providing a seamless and easy platform for hosting and deploying applications.
