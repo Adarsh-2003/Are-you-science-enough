@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from datetime import datetime, timedelta
+from datetime import datetime
 from dotenv import load_dotenv
 import os
 import re
@@ -143,7 +143,7 @@ def admin_logout():
     logout_user()
     return redirect(url_for('index'))
 
-# New Admin CRUD Routes
+# Admin CRUD Routes
 @app.route('/admin/user/create', methods=['POST'])
 @login_required
 def create_user():
