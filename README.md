@@ -1,6 +1,8 @@
 # Are You Science Enough? – Powered by Curiosity
 
-🎥 ****
+🎥 **Demo**
+
+[![Watch the demo](static/demo.png)](https://youtu.be/kILbI9iVsDI)
 
 A dynamic, web-based science quiz application built with Flask, PostgreSQL, web technologies (HTML, CSS, JavaScript). It challenges science enthusiasts with engaging quizes while tracking scores and maintaining a live leaderboard.
 
